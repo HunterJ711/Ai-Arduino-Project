@@ -1,7 +1,11 @@
 # Smart Fan Timer
 
 ## Overview
-This project is a temperature-aware, voice-controlled fan timer built with an Arduino Mega and Python. The Arduino uses a DHT sensor to monitor room temperature. When the temperature passes a threshold set in the code and a button is pressed, an indicator LED turns on to show that someone is in the room. At that point, a Python script uses speech recognition to ask how long the fan should run. The requested time is sent to the Arduino over serial, and the Arduino runs the fan (represented by an LED in the demo) for that duration. When the cycle is complete, the user presses the button again to turn off the indicator LED and return the system to temperature monitoring.
+## Overview
+This project is a temperature-aware, voice-controlled fan timer built with an Arduino Mega and Python. The Arduino continuously uses a DHT sensor to read and print the room temperature to the terminal while the system is idle. The temperature and the button are handled as separate functions: the DHT sensor is responsible for gathering temperature data, and the button is responsible for starting and ending an interaction.
+
+Once the user presses the button, the Arduino turns on an indicator LED and stops printing temperature to the terminal. At that point, the Python script uses speech recognition to collect how long the user wants the fan to run for. The requested time is sent to the Arduino over serial, and the Arduino runs the fan (represented by an LED in the demo) for that duration. When the cycle is complete, the user presses the button again to turn the indicator LED off, and the system returns to its idle state where it resumes collecting and printing temperature data.
+
 
 ## Hardware Requirements
 
@@ -21,7 +25,7 @@ This project is a temperature-aware, voice-controlled fan timer built with an Ar
 
 | Software          | Version  | Notes                                      |
 |-------------------|----------|--------------------------------------------|
-| Python            | 3.x      | Runs the speech recognition script         |
+| Python            | 3.12.1   | Runs the speech recognition script         |
 | SpeechRecognition | Latest   | Converts spoken input to text              |
 | PyAudio (or backend) | Latest| Microphone input                            |
 | pySerial          | Latest   | Serial communication with Arduino          |
@@ -33,7 +37,6 @@ This project is a temperature-aware, voice-controlled fan timer built with an Ar
 - The serial port name in the Python script must match the actual port.
 - The DHT data pin must match the pin defined in the Arduino sketch.
 - PyAudio can be difficult to install on some systems and may require extra system packages.
-- The system assumes the indicator LED is on when the user is present; forgetting to turn it off means it won’t fully return to idle behavior.
 
 ## Diagram
 - DHT sensor connections (VCC, GND, data pin)  
